@@ -1,10 +1,16 @@
+import connectdb from "@/db/db";
 import { Users } from "@/dummy/users";
-import { NextRequest, NextResponse } from "next/server"
+import User from "@/model/users";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET =  (req: NextRequest, res: NextResponse) => {
-    // const body = await req.json();
-    const user = Users
-
-    return NextResponse.json({ users: user }, { status: 200 })
-
-}
+export const GET = async (req: NextRequest, res: NextResponse) => {
+  try {
+    await connectdb()
+    const user = await User.find();
+    // console.log(user)
+  
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    console.log("Error", error);
+  }
+};

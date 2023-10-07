@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import UserCard from "@/components/UserCard";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
     return responseData;
   };
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['user'],
+    queryKey: ["user"],
     queryFn: async () => await getUserData(),
   });
 
@@ -22,12 +22,10 @@ export default function Home() {
   }
   console.log(data);
   return (
-    <div>
-      {data.map((item: any, index: number) => {
-        return <ul key={index}>
-          <li>{item.name}</li>
-        </ul>;
-      })}
+    <div className="container  py-4 mx-auto flex flex-wrap ">
+      {data.map((user: any, index: number) => (
+        <UserCard user={user} key={index} />
+      ))}
     </div>
   );
 }
